@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Universal QR Scanner</title>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body style="text-align:center;font-family:Arial">
+
+<h2>Universal QR Scanner</h2>
+<div id="reader" style="width:300px;margin:auto"></div>
+<p id="status">Arahkan QR ke kamera...</p>
+
+<script>
+  // INI YANG BISA DIGANTI KAPAN SAJA
+  const ENDPOINT = "https://script.google.com/macros/s/AKfycbx3eyn7mQuUEbdWK3KGvTeqgB2coluHFZVrX120Hor9jofdF_3jnuNT2DLKk4ILCrAc/exec";
+
+  function onScanSuccess(decodedText) {
+    document.getElementById("status").innerText = "Tercatat: " + decodedText;
+
+    // kirim ID ke sistem aktif
+    fetch(ENDPOINT + "?id=" + decodedText);
+  }
+
+  new Html5QrcodeScanner("reader", {
+    fps: 10,
+    qrbox: 250
+  }).render(onScanSuccess);
+</script>
+
+</body>
+</html>
